@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block body %}
+<a class="navbar-brand" href="/">Categorias de Productos</a>
+  <div class="row">
+
+    <div class="col-md-3">
+      {% with messages = get_flashed_messages()  %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      <div class="card card-body">
+        <form action="{{url_for('add_categoria')}}" method="POST">
+          <div class="form-group">
+            <input type="text" class="form-control" name="codigo" placeholder="Código" required pattern="[A-Za-z0-9]+" title="No puede tener Caracteres">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" maxlength="2" name="nombre" placeholder="Nombre"required title="Letras y números. Tamaño maximo: 2.">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="descripcion" placeholder="Descripción"required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="activo" placeholder="Activo"required>
+          </div>
+          <button class="btn btn-primary btn-block" >
+            Guardar 
+          </button>
+        </form>
+
+        
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <table class="table table-striped table-hover table-bordered table-sm bg-white">
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>Código</td>
+            <td>Nombre</td>
+            <td>Descripción</td>
+            <td>Activo</td>
+            <td>Operations</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for categoria in categorias %}
+          <tr>
+            <td>{{categoria.0}}</td>
+            <td>{{categoria.1}}</td>
+            <td>{{categoria.2}}</td>
+            <td>{{categoria.3}}</td>
+            <td>{{categoria.4}}</td>
+
+            <td>
+              <a href="/edit_categoria/{{categoria.0}}" class="btn btn-secondary">edit</a>
+              <a href="/delete_categoria/{{categoria.0}}" class="btn btn-danger btn-delete">delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    
+        
+     <a href="/indexProducto" class="btn btn-primary btn-block" style="margin: 10px" > 
+     	Ir a Producto 
+     </a>
+
+
+</div>
+
+
+{% endblock %}
